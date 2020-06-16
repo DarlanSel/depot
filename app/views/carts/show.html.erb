@@ -10,7 +10,8 @@
       <tr>
         <td class="quantity"><%= li.quantity %></td>
         <td><%= li.product.title %></td>
-        <td class="price"><%= number_to_currency li.total_price %></td>
+        <td class="price"><%= number_to_currency li.price %></td>
+        <td><%= button_to 'Remove item', li, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
     <tfoot>
