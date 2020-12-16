@@ -1,26 +1,5 @@
-<article>
-  <% if notice %>
-    <aside id="notice"><%= notice %></aside>
-  <% end %>
+<% if notice %>
+  <aside id="notice"><%= notice %></aside>
+<% end %>
 
-  <h2>Your Pragmatic Cart</h2>
-
-  <table>
-    <% @cart.line_items.each do |li| %>
-      <tr>
-        <td class="quantity"><%= li.quantity %></td>
-        <td><%= li.product.title %></td>
-        <td class="price"><%= number_to_currency li.price %></td>
-        <td><%= button_to 'Remove item', li, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-    <tfoot>
-      <tr>
-        <th colspan="2">Total:</th>
-        <td class="price"><%= number_to_currency @cart.total_price %></td>
-      </tr>
-    </tfoot>
-  </table>
-
-  <%= button_to 'Empty cart', @cart, method: :delete, data: { confirm: 'Are you sure?' } %>
-</article>
+<%= render @cart %>

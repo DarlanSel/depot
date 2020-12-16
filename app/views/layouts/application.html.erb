@@ -16,9 +16,9 @@
 
     <section class="content">
       <nav class="side_nav">
-        <span class="hour">
-          <%= DateTime.now.strftime("%I:%M:%S %p") %>
-        </span>
+        <div id="cart" class="carts">
+          <%= render_if @cart && @cart.line_items.any?, @cart %>
+        </div>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/questions">Questions</a></li>

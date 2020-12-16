@@ -1,5 +1,8 @@
 class StoreController < ApplicationController
   before_action :count, only: [:index]
+
+  include CurrentCart
+  before_action :set_cart
   
   def index
     @accesses = session[:count]
