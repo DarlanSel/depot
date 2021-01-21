@@ -33,7 +33,8 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart }
+        format.html { redirect_to store_index_url }
+        format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
@@ -59,14 +60,20 @@ class LineItemsController < ApplicationController
   # DELETE /line_items/1
   # DELETE /line_items/1.json
   def destroy
+    @cart = @line_item.cart
     if @line_item.quantity > 1
       @line_item.quantity -= 1
+      @line_item.price -= @line_item.product.price
       @line_item.save
     else
       @line_item.destroy
     end
+
+    notice = "Your cart is currently empty!" if @cart.line_items.empty?
+
     respond_to do |format|
-      format.html { redirect_to @line_item.cart, notice: 'Item was successfully removed.' }
+      format.html { redirect_to store_index_url }
+      format.js 
       format.json { head :no_content }
     end
   end

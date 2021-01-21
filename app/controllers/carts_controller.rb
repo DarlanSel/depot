@@ -1,9 +1,10 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
 
-  before_action :validate_cart
+  before_action :validate_cart, only: [:show]
 
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+  rescue_from StandardError, with: :invalid_cart
 
   # GET /carts
   # GET /carts.json
@@ -63,6 +64,7 @@ class CartsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to store_index_url, notice: 'Your cart is currently empty!' }
       format.json { head :no_content }
+      format.js
     end
   end
 
@@ -83,6 +85,6 @@ class CartsController < ApplicationController
     end
 
     def validate_cart
-      raise ActiveRecord::RecordNotFound if @cart.id != session[:cart_id]
+      raise StandardError if @cart.id != session[:cart_id]
     end
 end
